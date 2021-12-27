@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace reshenie
 {
@@ -76,7 +77,36 @@ namespace reshenie
                             break;
                         case 4:
                             List<string> types = new List<string>();
-                            
+                            foreach (var VARIABLE in list_per)
+                            {
+                                foreach (var V2 in VARIABLE.list)
+                                {
+                                    types.Add(V2.vid);
+                                }
+                            }
+
+                            var newtypes = types.Distinct();
+                            foreach (var VARIABLE in newtypes)
+                            {
+                                int minzn = 10000;
+                                int maxzn = -10000;
+                                foreach (var V2 in list_per)
+                                {
+                                    int mintemp = V2.FindMinInListWithNeededType(VARIABLE);
+                                    int maxtemp = V2.FindMaxInListWithNeededType(VARIABLE);
+                                    if (mintemp == 10000 & maxtemp == -10000)
+                                        continue;
+                                    else
+                                    {
+                                        if (mintemp < minzn)
+                                            minzn = mintemp;
+                                        if (maxtemp > maxzn)
+                                            maxzn = maxtemp;
+                                    }
+                                }
+                                Console.WriteLine($"У {VARIABLE} минимальный возраст равен" +
+                                                  $" {minzn}, а максимальный -  {maxzn}");
+                            }
                             break;
                     }
                 }

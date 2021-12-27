@@ -61,5 +61,33 @@ namespace reshenie
 
             return k;
         }
+
+        public int FindMinInListWithNeededType(string typeofneededanimal)
+        {
+            int min = 10000;
+            foreach (var VARIABLE in list)
+            {
+                if (VARIABLE.vid == typeofneededanimal)
+                {
+                    if (VARIABLE.age < min)
+                        min = VARIABLE.age;
+                }
+            }
+            return min;
+        }
+        
+        public int FindMaxInListWithNeededType(string typeofneededanimal)
+        {
+            int max = -10000;
+            foreach (var VARIABLE in list)
+            {
+                if (VARIABLE.vid == typeofneededanimal)
+                {
+                    if (VARIABLE.age > max)
+                        max = VARIABLE.age;
+                }
+            }
+            return max;
+        }
     }
 }
