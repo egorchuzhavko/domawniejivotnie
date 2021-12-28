@@ -11,23 +11,28 @@ namespace reshenie
         {
             List<Animal> list = new List<Animal>();
             List<Person> list_per = new List<Person>();
-            bool firstflag = false;
             using (StreamReader sr = new StreamReader("input.txt"))
             {
-                if(!firstflag){}
                 string[] temp = sr.ReadLine().Split(",");
-                list.Add(new Animal(temp[1],temp[2],Convert.ToInt32(temp[3])));
+                if (temp.Length == 6)
+                    list.Add(new Animal(temp[1], "Нет клички", Convert.ToInt32(temp[temp.Length - 1])));
+                else
+                    list.Add(new Animal(temp[1], temp[2], Convert.ToInt32(temp[3])));
                 list_per.Add(new Person(temp[0], list));
                 while (!sr.EndOfStream)
                 {
                     temp = sr.ReadLine().Split(",");
                     bool flag = false;
+                    int k = 0;
                     foreach (var VARIABLE in list_per)
                     {
-                        int k = 0;
                         if (VARIABLE.name_owner == temp[0])
                         {
-                            list_per[k].list.Add((new Animal(temp[1], temp[2], Convert.ToInt32(temp[3]))));
+                            if (temp.Length == 6)
+                                list_per[k].list.Add((new Animal(temp[1], "Нет клички",
+                                    Convert.ToInt32(temp[temp.Length - 1]))));
+                            else
+                                list_per[k].list.Add((new Animal(temp[1], temp[2], Convert.ToInt32(temp[3]))));
                             flag = true;
                             break;
                         }
@@ -36,7 +41,10 @@ namespace reshenie
                     if (!flag)
                     {
                         list = new List<Animal>();
-                        list.Add(new Animal(temp[1],temp[2],Convert.ToInt32(temp[3])));
+                        if (temp.Length == 6)
+                            list.Add(new Animal(temp[1], "Нет клички", Convert.ToInt32(temp[temp.Length - 1])));
+                        else
+                            list.Add(new Animal(temp[1], temp[2], Convert.ToInt32(temp[3])));
                         list_per.Add(new Person(temp[0], list));
                     }
                 }
@@ -84,7 +92,7 @@ namespace reshenie
                                     types.Add(V2.vid);
                                 }
                             }
-
+                            
                             var newtypes = types.Distinct();
                             foreach (var VARIABLE in newtypes)
                             {
